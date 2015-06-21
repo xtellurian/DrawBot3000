@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<center>
+<table width="600" height="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="400" valign="top" class="indexheader"><img src="images/prohtml.gif" width="175" height="50"></td>
+    <td class="linkList">&nbsp; </td>
+  </tr>
+  <tr>
+    <td class="indextext"><p>proSVG allows you to easily export vector graphics in the svg format from your processing applications. It is an extension of the processing standard renderer, so you can use all 2d methods of processing.<br>
+      <br>
+      To use proSVG you have to download it and place the prosvg folder inside zip into the library folder of your processing version. Change size(x,y) in your sketch to size(x,y,&quot;prosvg.SVGOut&quot;). Use saveFrame(&quot;filename.svg&quot;) to export the svg file, you can still export tga and tif files as well.<br>
+          <br>
+          <br>
+          <br>
+          <br>
+          Here is an example: </p>
+      <pre>import prosvg.*;
+
+flower one;
+
+void setup(){
+  size(1000,200,"prosvg.SVGOut");
+  strokeCap(ROUND); 
+  stroke(255,100);
+  smooth();
+  background(255);
+  one = new flower(random(width),random(height));
+}
+
+int counter = 0;
+void draw(){
+  background(255);
+  for(int i = 0;i < 100;i++){
+    float actualX = random(width);
+    float actualY = random(height);
+    one = new flower(actualX,actualY);    
+    fill(random(155,255),0,random(155,255),random(50,150));
+    one.paint();
+    strokeWeight(1.0); 
+  }
+  saveFrame("testFlowers-####.svg");
+  saveFrame("testFlowers-####.tif");
+  if(counter >= 10)noLoop();
+  counter++;
+}
+
+class Point{
+  float xPos;
+  float yPos;
+
+  Point(float xPos,float yPos){
+    this.xPos = xPos;
+    this.yPos = yPos;
+  }
+}
+
+class flower{
+  float[][] rands;
+  int repeats;
+  float basic_rnd01;
+  float basic_rnd02;
+  float basic_rnd03;
+  float basic_rnd04;
+  float basic_rnd05;
+  float xPos,yPos;
+
+  flower(float xPos,float yPos){
+    repeats = int(random(10,30));
+    rands = new float[repeats][22];
+    basic_rnd01 = random(0,10);
+    basic_rnd02 = basic_rnd01 + random(0,10);
+    basic_rnd03 = basic_rnd02 + random(30);
+    basic_rnd04 = basic_rnd03 + random(20);
+    basic_rnd05 = basic_rnd04 + random(40);
+    setRands();
+    this.xPos = xPos;
+    this.yPos = yPos;
+  }
+
+  void setRands(){
+    for(int i = 0; i < repeats;i++){
+      rands[i][0] = random(basic_rnd01,basic_rnd02);
+      rands[i][1] = random(basic_rnd01,basic_rnd02); 
+      rands[i][2] = random(basic_rnd01,basic_rnd02);
+      rands[i][3] = random(basic_rnd01,basic_rnd02);
+      rands[i][4] = random(basic_rnd02,basic_rnd03);
+      rands[i][5] = random(basic_rnd02,basic_rnd03);
+      rands[i][6] = random(basic_rnd01,basic_rnd02);
+      rands[i][7] = random(basic_rnd04,basic_rnd05);
+      rands[i][8] = random(basic_rnd02,basic_rnd03);
+      rands[i][9] = random(basic_rnd02,basic_rnd03);
+      rands[i][10] = random(basic_rnd01,basic_rnd02);
+      rands[i][11] = random(basic_rnd04,basic_rnd05);
+      rands[i][12] = random(basic_rnd02,-basic_rnd03);
+      rands[i][13] = random(basic_rnd02,-basic_rnd03);
+      rands[i][14] = random(basic_rnd01,basic_rnd02);
+      rands[i][15] = random(basic_rnd04,basic_rnd05);
+      rands[i][16] = random(basic_rnd02,-basic_rnd03);
+      rands[i][17] = random(basic_rnd02,-basic_rnd03);
+      rands[i][18] = random(basic_rnd01,-basic_rnd02);
+      rands[i][19] = random(basic_rnd01,-basic_rnd02);
+      rands[i][20] = random(basic_rnd01,-basic_rnd02);
+      rands[i][21] = random(basic_rnd01,-basic_rnd02);
+    }
+  }
+
+  void paint(){
+  pushMatrix();
+    translate(xPos,yPos);
+    
+    for(int i = 0; i < repeats;i++){
+      rotate(TWO_PI/repeats);
+      beginShape(POLYGON); 
+      vertex(0, 0); 
+      vertex(rands[i][0], rands[i][1]); 
+      bezierVertex(
+		rands[i][2], rands[i][3], rands[i][4], 
+		rands[i][5], rands[i][6], rands[i][7]
+	  );
+      bezierVertex(
+		rands[i][8], rands[i][9], rands[i][10], 
+		rands[i][11], rands[i][12], rands[i][13]
+	  );
+      bezierVertex(
+		rands[i][14], rands[i][15], rands[i][16], 
+		rands[i][17], rands[i][18], rands[i][19]
+	  );
+      vertex(rands[i][20], rands[i][21]);
+      endShape(); 
+    }
+    popMatrix();
+  }
+}
+</pre>
+        <br>
+          <br>
+      </p>      </td>
+    <td class="descList">&nbsp;</td>
+  </tr>
+</table>
+</center>
+</body>
+</html>

@@ -1,0 +1,1 @@
+javac -cp batik-awt-util.jar;batik-dom.jar;batik-ext.jar;batik-svggen.jar;batik-util.jar;batik-xml.jar;batik-xml.jar;prosvg.jar;..\..\..\lib\core.jar ..\SVGOut.java ..\SVGKdl.java ..\SVGGraphics.java 
