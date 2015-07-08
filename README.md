@@ -1,10 +1,10 @@
 # DrawBot3000
 
-## Some useful links: ##
+## Some useful links:##
 Protocol - Ascii Commands and Responses
 https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-responses
 
-## To Do ## 
+## To Do## 
 
 - implement all commands into Nick's processing sketch
 - Draw detailed vector for fine tuning
