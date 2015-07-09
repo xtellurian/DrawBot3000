@@ -11,6 +11,7 @@ https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-respons
 - Improve Gondola
 - Easy Orientation Method
 - Replace headers with screw terminals for BlueSmirf
+- Find an art show and sign the fuck up
 
 
 
