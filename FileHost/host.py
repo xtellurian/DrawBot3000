@@ -1,15 +1,15 @@
 import serial
 import sys
-import polargraph
+#import polargraph
 
 #consts
 OK = "READY"
 	
-	
+lineend = '\n'	
 
 #get serial port
-ser = serial.Serial('/dev/tty.usbmodem1411', 57600)
-commands = polargraph.commands()
+ser = serial.Serial('/dev/ttyACM0', 57600)
+#commands = polargraph.commands()
 
 #get file data 
 [filename] = sys.argv[1:]
@@ -24,24 +24,16 @@ def Next(commandcount):
 	return data[commandcount]
 
 count = 0
-while True:
+while count < len(data):
 	response = ser.readline()
 	print "From Bot: " + response
 	if OK in response:
 		send = Next(count)
 		count = count + 1
 		print send
-		ser.write(send)
-		
+		ser.write(send+lineend)
 	
 
-
-	
-
-
-
-
-
-
+print "Completed"
 
 	
