@@ -11,7 +11,11 @@ https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-respons
 - Improve Gondola
 - Easy Orientation Method
 - Replace headers with screw terminals for BlueSmirf
+- 
+## File Host ##
 
+- You can setup your paths on the host, and then export then queue. Use 'sudo python host.py <yourqueue>' to run the queue
+- 
 
 
 
