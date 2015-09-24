@@ -9,9 +9,9 @@ String lnEnd = ",END\n";
 void setup() 
 {
   size(200, 200);
-  println(Serial.list())
-//  String portName = Serial.list()[2];
-  String portName = "/dev/tty.robot-2B1A-RNI-SPP";
+  println(Serial.list());
+  String portName = Serial.list()[3];
+//  String portName = "/dev/tty.robot-2B1A-RNI-SPP";
   myPort = new Serial(this, portName, 57600);
   myPort.write("C09," + str(xPos) + "," + str(yPos) + lnEnd); //Sets initial position
 }
@@ -31,10 +31,10 @@ void keyPressed() {
     cmd = "C13,END\n";
   } else if (key == '=') { //pen down
     cmd="C14,END\n";
-  } else if(key == 'w') { //up
+  } else if(key == 'a') { //up
     yPos += stepSize;
     cmd="C01," + str(xPos) + "," + yPos + lnEnd;
-  } else if(key == 'a') { //left
+  } else if(key == 'w') { //left
     xPos -= stepSize;
     cmd="C01," + str(xPos) + "," + yPos + lnEnd;
   } else if(key == 'd') { //right
