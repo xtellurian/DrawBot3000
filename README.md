@@ -10,7 +10,6 @@ https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-respons
 - Draw detailed vector for fine tuning
 - Improve Gondola
 - Easy Orientation Method
-- Replace headers with screw terminals for BlueSmirf
 - 
 ##File Host##
 
@@ -18,10 +17,14 @@ https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-respons
 -
 
 #Motors#
+
+http://www.anaheimautomation.com/manuals/stepper/L010174%20-%2017Y%20Series%20Spec%20Sheet.pdf
 -The motors are 2 phase steppers, each with 2 coils. 
-- M1 /M2 is the left hand motor (v2 motor shield)
-- M3/M4 is the right hand motor (v2 motor shield)
-- 
+
+left:
+- red/orange = pair 1; brown/green = pair 2
+
+
 
 
 
