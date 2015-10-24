@@ -259,6 +259,10 @@ const static String CMD_SETMOTORSPEED = "C31";
 const static String CMD_SETMOTORACCEL = "C32";
 const static String CMD_SETMACHINESTEPMULTIPLIER = "C37";
 
+
+#define ledPin 12// added by rian
+//#define DEBUG_COMMS
+
 void setup() 
 {
   Serial.begin(57600);           // set up Serial library at 57600 bps
@@ -295,10 +299,16 @@ void setup()
 #endif
   delay(500);
 
+  pinMode(ledPin,OUTPUT);// added by rian
+  digitalWrite(ledPin,HIGH);
 }
-
+bool isLedOn = false;// added by rian
 void loop()
 {
+//  if(isLedOn) digitalWrite(ledPin,HIGH); // added by rian
+//  else digitalWrite(ledPin,LOW);// added by rian
+//  isLedOn = !isLedOn;// added by rian
+  
   if (comms_waitForNextCommand(lastCommand)) 
   {
 #ifdef DEBUG_COMMS    
