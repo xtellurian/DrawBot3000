@@ -16,10 +16,10 @@
 
   You should have received a copy of the GNU General Public License
   along with Polargraph Controller.  If not, see <http://www.gnu.org/licenses/>.
-    
+
   Requires the excellent ControlP5 GUI library available from http://www.sojamo.de/libraries/controlP5/.
   Requires the excellent Geomerative library available from http://www.ricardmarxer.com/geomerative/.
-  
+
   This is an application for controlling a polargraph machine, communicating using ASCII command language over a serial link.
 
   sandy.noble@gmail.com
@@ -106,11 +106,11 @@ void numberbox_mode_penDownPos(int value)
 void button_mode_sendPenliftRange()
 {
   addToCommandQueue(CMD_SETPENLIFTRANGE+penLiftDownPosition+","+penLiftUpPosition+",END");
-}  
+}
 void button_mode_sendPenliftRangePersist()
 {
   addToCommandQueue(CMD_SETPENLIFTRANGE+penLiftDownPosition+","+penLiftUpPosition+",1,END");
-}  
+}
 
 void numberbox_mode_liveBlurValue(int value)
 {
@@ -146,7 +146,7 @@ void button_mode_liveClearCapture()
 }
 void button_mode_liveAddCaption()
 {
-  
+
 }
 void numberbox_mode_vectorPathLengthHighPassCutoff(int value)
 {
@@ -158,19 +158,19 @@ void button_mode_liveConfirmDraw()
   if (captureShape != null)
   {
     confirmedDraw = true;
-    
+
     // work out scaling and position
     float scaling = getDisplayMachine().inMM(getDisplayMachine().getImageFrame().getWidth()) / captureShape.getWidth();
-    PVector position = new PVector(getDisplayMachine().inMM(getDisplayMachine().getImageFrame().getPosition().x), 
+    PVector position = new PVector(getDisplayMachine().inMM(getDisplayMachine().getImageFrame().getPosition().x),
     getDisplayMachine().inMM(getDisplayMachine().getImageFrame().getPosition().y));
-  
+
     sendVectorShapes(captureShape, scaling, position, PATH_SORT_CENTRE_FIRST);
     button_mode_penUp();
 
     //  save shape as SVG
     trace_saveShape(captureShape);
   }
-} 
+}
 void toggle_mode_showWebcamRawVideo(boolean flag)
 {
 //  drawingLiveVideo = flag;
@@ -322,6 +322,7 @@ void button_mode_loadVectorFile()
 {
   if (getVectorShape() == null)
   {
+    println("derp");
     loadVectorWithFileChooser();
     minitoggle_mode_showVector(true);
   }
@@ -468,14 +469,14 @@ void numberbox_mode_resizeImage(float value)
   float ratio = r.getHeight() / r.getWidth();
 
   float oldSize = r.getSize().x;
-  
+
   r.getSize().x = steps;
   r.getSize().y = steps * ratio;
 
   float difference = (r.getSize().x / 2.0)-(oldSize/2.0);
   r.getPosition().x -= difference;
   r.getPosition().y -= difference * ratio;
-  
+
   if (getDisplayMachine().pixelsCanBeExtracted() && isBoxSpecified())
     getDisplayMachine().extractPixelsFromArea(getBoxVector1(), getBoxVectorSize(), getGridSize(), getSampleArea());
 }
@@ -489,23 +490,23 @@ void numberbox_mode_resizeVector(float value)
     oldVectorSize = PVector.mult(oldVectorSize, (vectorScaling/100));
     // and current centre point of vector
     PVector oldCentroid = new PVector(oldVectorSize.x / 2.0, oldVectorSize.y / 2.0);
-    
+
     // get newly scaled size of vector
     PVector newVectorSize = new PVector(getVectorShape().width, getVectorShape().height);
     newVectorSize = PVector.mult(newVectorSize, (value/100));
     // and new centre point of vector
     PVector newCentroid = new PVector(newVectorSize.x / 2.0, newVectorSize.y / 2.0);
-    
+
     // difference is current centre minus new centre
     PVector difference = PVector.sub(oldCentroid, newCentroid);
-    
+
     // add difference onto vector position
     PVector newVectorPosition = PVector.add(vectorPosition, difference);
     vectorPosition = newVectorPosition;
   }
-  
+
   vectorScaling = value;
-  
+
 }
 void toggle_mode_moveVector(boolean flag)
 {
@@ -606,10 +607,10 @@ void numberbox_mode_changePenWidth(float value)
 void button_mode_sendPenWidth()
 {
   NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
-  DecimalFormat df = (DecimalFormat)nf;  
+  DecimalFormat df = (DecimalFormat)nf;
   df.applyPattern("###.##");
   addToRealtimeCommandQueue(CMD_CHANGEPENWIDTH+df.format(currentPenWidth)+",END");
-}  
+}
 
 void numberbox_mode_changePenTestStartWidth(float value)
 {
@@ -635,7 +636,7 @@ void numberbox_mode_changeMachineAcceleration(float value)
 void button_mode_sendMachineSpeed()
 {
   NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
-  DecimalFormat df = (DecimalFormat)nf;  
+  DecimalFormat df = (DecimalFormat)nf;
 
   df.applyPattern("###.##");
   addToRealtimeCommandQueue(CMD_SETMOTORSPEED+df.format(currentMachineMaxSpeed)+",END");
@@ -647,7 +648,7 @@ void button_mode_sendMachineSpeed()
 void button_mode_sendMachineSpeedPersist()
 {
   NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
-  DecimalFormat df = (DecimalFormat)nf;  
+  DecimalFormat df = (DecimalFormat)nf;
 
   df.applyPattern("###.##");
   addToCommandQueue(CMD_SETMOTORSPEED+df.format(currentMachineMaxSpeed)+",1,END");
@@ -724,5 +725,3 @@ void numberbox_mode_previewCordOffsetValue(int value)
   previewCordOffset = value;
   previewQueue(true);
 }
-
-
