@@ -55,15 +55,15 @@ There are five config sections:
 
 //   i. Adafruit Motorshield v1. The original, and still the best.
 //   -------------------------------------------------------------
-#define ADAFRUIT_MOTORSHIELD_V1
-#include <AFMotor.h>
+//#define ADAFRUIT_MOTORSHIELD_V1
+//#include <AFMotor.h>
 
 //   ii. Adafruit Motorshield v2. It's all squealy.
 //   ----------------------------------------------
-//#define ADAFRUIT_MOTORSHIELD_V2
-//#include <Wire.h>
-//#include <Adafruit_MotorShield.h>
-//#include "utility/Adafruit_PWMServoDriver.h"
+#define ADAFRUIT_MOTORSHIELD_V2
+#include <Wire.h>
+#include <Adafruit_MotorShield.h>
+#include "utility/Adafruit_PWMServoDriver.h"
 
 //   iii. Using discrete stepper drivers? (eg EasyDriver, stepstick, Pololu gear)
 //   ----------------------------------------------------------------------------
