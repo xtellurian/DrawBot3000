@@ -16,12 +16,13 @@ final float   image_size_y = 35 * 25.4;
 final float   paper_top_to_origin = 500;  //mm
 
 // Super fun things to tweak.  Not candy unicorn type fun, but still...
-final int     squiggle_total = 600;     // Total times to pick up the pen
+ int     squiggle_total = 50;     // Total times to pick up the pen
 final int     squiggle_length = 400;    // Too small will fry your servo
 final int     half_radius = 10;          // How grundgy
 final int     adjustbrightness = 12;     // How fast it moves from dark to light, over draw
 final float   sharpie_dry_out = 0.0;   // Simulate the death of sharpie, zero for super sharpie
-final String  pic_path = "pics/tree2.jpg";
+final String pic_name = "tree2.jpg";
+final String  pic_path = "pics/" + pic_name;
 
 //Every good program should have a shit pile of badly named globals.
 int    screen_offset = 4;
@@ -65,13 +66,28 @@ void setup() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void draw() {
     scale(screen_scale);
-    random_darkness_walk();
-  
-    if (squiggle_count >= squiggle_total) {
-        grid();
-        dump_some_useless_stuff_and_close();
-        noLoop();
+    
+    for(int i=0; i<=5; i++) {
+      while(squiggle_count < squiggle_total) {
+        random_darkness_walk();
+        if (squiggle_count >= squiggle_total) {
+      //        grid();
+      //        dump_some_useless_stuff_and_close();
+          String filename = "frames/" + pic_name + "-" + squiggle_total + "_" + squiggle_length + "_" + half_radius + "_" + adjustbrightness + ".png";
+          println("done, saving " + filename);
+          saveFrame(filename);
+          squiggle_total += 100;
+          squiggle_count = 0;
+          background(0,0,100);
+        }
+      }
     }
+    
+    noLoop();
+
+//    random_darkness_walk();
+    
+ 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
