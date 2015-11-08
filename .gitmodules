@@ -1,0 +1,4 @@
+[submodule "Control/Polargraph/polargraph_server_a1"]
+	path = Control/Polargraph/polargraph_server_a1
+[submodule "Control/Polargraph/polargraphcontroller"]
+	path = Control/Polargraph/polargraphcontroller
