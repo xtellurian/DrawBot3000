@@ -165,4 +165,6 @@ void reset() {
   squiggle_count = 0;
   background(0,0,100);
   clear();
+  img = loadImage(sketchPath("") + pic_path);  // Load the image into the program
+  img.loadPixels();
 }
