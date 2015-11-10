@@ -52,28 +52,6 @@ PrintWriter OUTPUT;       // instantiation of the JAVA PrintWriter object.
 
 ControlP5 cp5;
 
-//class DoucheNozzle implements CallbackListener {
-//  void controlEvent(CallbackEvent theEvent) {
-//    int eventID = theEvent.getAction();
-//    if(eventID == 1 || eventID == 100) {
-//       println("cb called" + eventID);
-//       println("resetting...");
-////       adjustbrightness = guiAdjustBrightness;
-////       half_radius = guiHalfRadius;
-////       squiggle_total = guiSquiggleTotal;
-////       squiggle_length = guiSquiggleLength;
-//       reset();
-//       balls();
-//    }
-//  }  
-//}
-//
-//DoucheNozzle douche;
-//
-//void balls() {
-//  println(cp5.get("guiHalfRadius").getValue());
-//}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
   setupGUI();
@@ -91,7 +69,7 @@ void setup() {
 }
 
 
-
+/////////////////////////////////////// GUI ////////////////////////////////////////////////////////////////
 void setupGUI() {
   cp5 = new ControlP5(this);
    cp5.addSlider("guiHalfRadius")
@@ -99,7 +77,7 @@ void setupGUI() {
      .setRange(0,30)
      .setLabel("Half Radius")
      .setColorLabel(0)
-     .setValue(3) //not sure why I can't say 'half_radius' here. 
+     .setValue(3) //TODO: not sure why I can't give variable names here....
      ;
     
     cp5.addSlider("guiSquiggleTotal")
@@ -157,8 +135,6 @@ void draw() {
   
     if (squiggle_count >= squiggle_total) {
 //        grid();
-//        dump_some_useless_stuff_and_close();
-//        noLoop();
     } else {
       random_darkness_walk();
     }
@@ -211,14 +187,6 @@ void grid() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void dump_some_useless_stuff_and_close() {
-  println ("Extreams of X: " + drawing_min_x + " thru " + drawing_max_x);
-  println ("Extreams of Y: " + drawing_min_y + " thru " + drawing_max_y);
-  OUTPUT.flush();
-  OUTPUT.close();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 void reset() {
   darkest_x = 100;
   darkest_y = 100;
@@ -227,4 +195,7 @@ void reset() {
 //  clear();
   img = loadImage(sketchPath("") + pic_path);  // Load the image into the program
   img.loadPixels();
+  OUTPUT.flush();
+  OUTPUT.close();
+  OUTPUT = createWriter("gcode.txt");
 }
