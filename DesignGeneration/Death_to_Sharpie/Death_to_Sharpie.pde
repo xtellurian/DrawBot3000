@@ -79,7 +79,7 @@ void setupGUI() {
      .setRange(0,30)
      .setLabel("Half Radius")
      .setColorLabel(0)
-     .setValue(3) //TODO: not sure why I can't give variable names here....
+     .setValue(3) //TODO: init variables rather than magic numbers here. Doesn't work at the moment for some reason...
      ;
     
     cp5.addSlider("guiSquiggleTotal")
@@ -115,9 +115,9 @@ void setupGUI() {
           
 }
 
+//TODO: Use callbacks instead of using these default functions
 void guiYOffset() {
   paper_top_to_origin = (int)cp5.getController("guiYOffset").getValue();
-  println("setting offset to " + cp5.getController("guiYOffset").getValue());
   reset();
   
 }
