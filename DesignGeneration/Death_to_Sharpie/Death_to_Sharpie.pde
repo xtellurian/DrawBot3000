@@ -15,7 +15,7 @@ final float   paper_size_x = 32 * 25.4;
 final float   paper_size_y = 40 * 25.4;
 final float   image_size_x = 30 * 25.4;
 final float   image_size_y = 35 * 25.4;
-final float   paper_top_to_origin = 417;  //mm
+float   paper_top_to_origin = 600;  //mm
 
 // Super fun things to tweak.  Not candy unicorn type fun, but still...
  int     squiggle_total = 400;     // Total times to pick up the pen
@@ -23,7 +23,7 @@ final float   paper_top_to_origin = 417;  //mm
  int     half_radius = 3;          // How grundgy
  int     adjustbrightness = 8;     // How fast it moves from dark to light, over draw
  float   sharpie_dry_out = 0;   // Simulate the death of sharpie, zero for super sharpie
- String  pic_path = "pics/b1.jpg";
+ String  pic_path = "pics/skull2.jpg";
 
 //Every good program should have a shit pile of badly named globals.
 int    screen_offset = 4;
@@ -102,9 +102,23 @@ void setupGUI() {
      .setColorLabel(0)
      .setValue(8)
      ;  
+     
+     cp5.addSlider("guiYOffset")
+     .setPosition(10,100)
+     .setRange(0,1000)
+     .setLabel("Y Offset")
+     .setColorLabel(0)
+     .setValue(0)
+     ;  
           
 }
 
+void guiYOffset() {
+  paper_top_to_origin = (int)cp5.getController("guiYOffset").getValue();
+  println("setting offset to " + cp5.getController("guiYOffset").getValue());
+  reset();
+  
+}
 
 void guiHalfRadius() {
   half_radius = (int)cp5.getController("guiHalfRadius").getValue();
@@ -193,8 +207,7 @@ void reset() {
   squiggle_count = 0; 
   background(0,0,100);
 //  clear();
-  img = loadImage(sketchPath("") + pic_path);  // Load the image into the program
-  img.loadPixels();
+  setup_squiggles();
   OUTPUT.flush();
   OUTPUT.close();
   OUTPUT = createWriter("gcode.txt");
