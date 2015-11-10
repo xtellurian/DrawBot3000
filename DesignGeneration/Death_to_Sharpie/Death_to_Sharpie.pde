@@ -8,6 +8,8 @@
 // If anything here is remotely useable, please give me a shout.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import controlP5.*;
+
 // Constants set by user, or maybe your sister.
 final float   paper_size_x = 32 * 25.4;
 final float   paper_size_y = 40 * 25.4;
@@ -16,12 +18,12 @@ final float   image_size_y = 35 * 25.4;
 final float   paper_top_to_origin = 417;  //mm
 
 // Super fun things to tweak.  Not candy unicorn type fun, but still...
-final int     squiggle_total = 400;     // Total times to pick up the pen
-final int     squiggle_length = 600;    // Too small will fry your servo
-final int     half_radius = 3;          // How grundgy
-final int     adjustbrightness = 8;     // How fast it moves from dark to light, over draw
-final float   sharpie_dry_out = 0.25;   // Simulate the death of sharpie, zero for super sharpie
-final String  pic_path = "pics\\b1.jpg";
+ int     squiggle_total = 400;     // Total times to pick up the pen
+ int     squiggle_length = 600;    // Too small will fry your servo
+ int     half_radius = 3;          // How grundgy
+ int     adjustbrightness = 8;     // How fast it moves from dark to light, over draw
+ float   sharpie_dry_out = 0;   // Simulate the death of sharpie, zero for super sharpie
+ String  pic_path = "pics/b1.jpg";
 
 //Every good program should have a shit pile of badly named globals.
 int    screen_offset = 4;
@@ -48,8 +50,34 @@ int    center_y;
 boolean is_pen_down;
 PrintWriter OUTPUT;       // instantiation of the JAVA PrintWriter object.
 
+ControlP5 cp5;
+
+//class DoucheNozzle implements CallbackListener {
+//  void controlEvent(CallbackEvent theEvent) {
+//    int eventID = theEvent.getAction();
+//    if(eventID == 1 || eventID == 100) {
+//       println("cb called" + eventID);
+//       println("resetting...");
+////       adjustbrightness = guiAdjustBrightness;
+////       half_radius = guiHalfRadius;
+////       squiggle_total = guiSquiggleTotal;
+////       squiggle_length = guiSquiggleLength;
+//       reset();
+//       balls();
+//    }
+//  }  
+//}
+//
+//DoucheNozzle douche;
+//
+//void balls() {
+//  println(cp5.get("guiHalfRadius").getValue());
+//}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  setupGUI();
+//  douche = new DoucheNozzle();
   size(900, 975, P2D);
   noSmooth();
   colorMode(HSB, 360, 100, 100, 100);
@@ -62,15 +90,77 @@ void setup() {
   img.loadPixels();
 }
 
+
+
+void setupGUI() {
+  cp5 = new ControlP5(this);
+   cp5.addSlider("guiHalfRadius")
+     .setPosition(10,20)
+     .setRange(0,30)
+     .setLabel("Half Radius")
+     .setColorLabel(0)
+     .setValue(3) //not sure why I can't say 'half_radius' here. 
+     ;
+    
+    cp5.addSlider("guiSquiggleTotal")
+     .setPosition(10,40)
+     .setRange(10,1000)
+     .setLabel("Squiggle Total")
+     .setColorLabel(0)
+     .setValue(400);
+   
+   cp5.addSlider("guiSquiggleLength")
+     .setPosition(10,60)
+     .setRange(100,1000)
+     .setLabel("Squiggle Length")
+     .setColorLabel(0)
+     .setValue(600)
+     ;  
+     
+     cp5.addSlider("guiAdjustBrightness")
+     .setPosition(10,80)
+     .setRange(0,50)
+     .setLabel("Brightness Interval")
+     .setColorLabel(0)
+     .setValue(8)
+     ;  
+          
+}
+
+
+void guiHalfRadius() {
+  half_radius = (int)cp5.getController("guiHalfRadius").getValue();
+  reset();
+  
+}
+
+void guiAdjustBrightness() {
+  adjustbrightness = (int)cp5.getController("guiAdjustBrightness").getValue();
+  reset();
+}
+
+void guiSquiggleLength() {
+  squiggle_length = (int)cp5.getController("guiSquiggleLength").getValue();
+  reset();
+}
+
+void guiSquiggleTotal() {
+  squiggle_total = (int)cp5.getController("guiSquiggleTotal").getValue();
+   reset();
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void draw() {
     scale(screen_scale);
-    random_darkness_walk();
+    
   
     if (squiggle_count >= squiggle_total) {
-        grid();
-        dump_some_useless_stuff_and_close();
-        noLoop();
+//        grid();
+//        dump_some_useless_stuff_and_close();
+//        noLoop();
+    } else {
+      random_darkness_walk();
     }
 }
 
@@ -129,4 +219,12 @@ void dump_some_useless_stuff_and_close() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
+void reset() {
+  darkest_x = 100;
+  darkest_y = 100;
+  squiggle_count = 0; 
+  background(0,0,100);
+//  clear();
+  img = loadImage(sketchPath("") + pic_path);  // Load the image into the program
+  img.loadPixels();
+}
