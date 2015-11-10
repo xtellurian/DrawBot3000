@@ -10,6 +10,8 @@
 
 import controlP5.*;
 
+boolean VERBOSE = false;
+
 // Constants set by user, or maybe your sister.
 final float   paper_size_x = 32 * 25.4;
 final float   paper_size_y = 40 * 25.4;
@@ -162,22 +164,27 @@ void setup_squiggles() {
   drawing_scale_x = image_size_x / img.width;
   drawing_scale_y = image_size_y / img.height;
   drawing_scale = min(drawing_scale_x, drawing_scale_y);
-
-  println("Picture: " + pic_path);
-  println("Image dimensions: " + img.width + " by " + img.height);
-  println("adjustbrightness: " + adjustbrightness);
-  println("squiggle_total: " + squiggle_total);
-  println("squiggle_length: " + squiggle_length);
-  println("Paper size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
-  println("Max image size: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
-  println("Calc image size " + nf(img.width * drawing_scale,0,2) + " by " + nf(img.height * drawing_scale,0,2) + "      " + nf(img.width * drawing_scale/25.4,0,2) + " by " + nf(img.height * drawing_scale/25.4,0,2));
-  println("Drawing scale: " + drawing_scale);
-
+  
   // Used only for gcode, not screen.
   x_offset = int(-img.width * drawing_scale / 2.0);  
   y_offset = - int(paper_top_to_origin - (paper_size_y - (img.height * drawing_scale)) / 2.0);
-  println("X offset: " + x_offset);  
-  println("Y offset: " + y_offset);  
+  
+  if(VERBOSE == true) {
+    println("Picture: " + pic_path);
+    println("Image dimensions: " + img.width + " by " + img.height);
+    println("adjustbrightness: " + adjustbrightness);
+    println("squiggle_total: " + squiggle_total);
+    println("squiggle_length: " + squiggle_length);
+    println("Paper size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
+    println("Max image size: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
+    println("Calc image size " + nf(img.width * drawing_scale,0,2) + " by " + nf(img.height * drawing_scale,0,2) + "      " + nf(img.width * drawing_scale/25.4,0,2) + " by " + nf(img.height * drawing_scale/25.4,0,2));
+    println("Drawing scale: " + drawing_scale);
+    println("X offset: " + x_offset);  
+    println("Y offset: " + y_offset); 
+  }
+
+  
+   
 
   // Used only for screen, not gcode.
   center_x = int(width  / 2 * (1 / screen_scale));
