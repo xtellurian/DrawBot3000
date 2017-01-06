@@ -37,3 +37,6 @@ Contains sketches used to generate paths for the robot to draw. At the time of t
 ## Some useful links:##
 Protocol - Ascii Commands and Responses
 https://github.com/euphy/polargraph/wiki/Polargraph-machine-commands-and-responses
+
+## Time Lapse Video ##
+[![Drawbot Time Lapse](http://img.youtube.com/vi/pmY5iP3o-BI/0.jpg)](https://www.youtube.com/watch?v=pmY5iP3o-BI)
