@@ -17,11 +17,11 @@ final float   paper_top_to_origin = 417;  //mm
 
 // Super fun things to tweak.  Not candy unicorn type fun, but still...
 final int     squiggle_total = 400;     // Total times to pick up the pen
-final int     squiggle_length = 600;    // Too small will fry your servo
-final int     half_radius = 3;          // How grundgy
-final int     adjustbrightness = 8;     // How fast it moves from dark to light, over draw
-final float   sharpie_dry_out = 0.25;   // Simulate the death of sharpie, zero for super sharpie
-final String  pic_path = "pics\\b1.jpg";
+final int     squiggle_length = 250;    // Too small will fry your servo
+final int     half_radius = 6;          // How grundgy
+final int     adjustbrightness = 5;     // How fast it moves from dark to light, over draw
+final float   sharpie_dry_out = 0;   // Simulate the death of sharpie, zero for super sharpie
+final String  pic_path = "pics//nude4.jpg";
 
 //Every good program should have a shit pile of badly named globals.
 int    screen_offset = 4;
