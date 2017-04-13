@@ -8,20 +8,33 @@
 // If anything here is remotely useable, please give me a shout.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import controlP5.*;
+
+boolean VERBOSE = false;
+
 // Constants set by user, or maybe your sister.
 final float   paper_size_x = 32 * 25.4;
 final float   paper_size_y = 40 * 25.4;
 final float   image_size_x = 30 * 25.4;
 final float   image_size_y = 35 * 25.4;
-final float   paper_top_to_origin = 417;  //mm
+float   paper_top_to_origin = 600;  //mm
 
 // Super fun things to tweak.  Not candy unicorn type fun, but still...
+<<<<<<< HEAD
 final int     squiggle_total = 400;     // Total times to pick up the pen
 final int     squiggle_length = 250;    // Too small will fry your servo
 final int     half_radius = 6;          // How grundgy
 final int     adjustbrightness = 5;     // How fast it moves from dark to light, over draw
 final float   sharpie_dry_out = 0;   // Simulate the death of sharpie, zero for super sharpie
 final String  pic_path = "pics//nude4.jpg";
+=======
+ int     squiggle_total = 400;     // Total times to pick up the pen
+ int     squiggle_length = 600;    // Too small will fry your servo
+ int     half_radius = 3;          // How grundgy
+ int     adjustbrightness = 8;     // How fast it moves from dark to light, over draw
+ float   sharpie_dry_out = 0;   // Simulate the death of sharpie, zero for super sharpie
+ String  pic_path = "pics/skull2.jpg";
+>>>>>>> 7ae7804499c02f8151c22af39aaf9ab972ae5654
 
 //Every good program should have a shit pile of badly named globals.
 int    screen_offset = 4;
@@ -48,8 +61,12 @@ int    center_y;
 boolean is_pen_down;
 PrintWriter OUTPUT;       // instantiation of the JAVA PrintWriter object.
 
+ControlP5 cp5;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
+  setupGUI();
+//  douche = new DoucheNozzle();
   size(900, 975, P2D);
   noSmooth();
   colorMode(HSB, 360, 100, 100, 100);
@@ -62,15 +79,89 @@ void setup() {
   img.loadPixels();
 }
 
+
+/////////////////////////////////////// GUI ////////////////////////////////////////////////////////////////
+void setupGUI() {
+  cp5 = new ControlP5(this);
+   cp5.addSlider("guiHalfRadius")
+     .setPosition(10,20)
+     .setRange(0,30)
+     .setLabel("Half Radius")
+     .setColorLabel(0)
+     .setValue(3) //TODO: init variables rather than magic numbers here. Doesn't work at the moment for some reason...
+     ;
+    
+    cp5.addSlider("guiSquiggleTotal")
+     .setPosition(10,40)
+     .setRange(10,1000)
+     .setLabel("Squiggle Total")
+     .setColorLabel(0)
+     .setValue(400);
+   
+   cp5.addSlider("guiSquiggleLength")
+     .setPosition(10,60)
+     .setRange(100,1000)
+     .setLabel("Squiggle Length")
+     .setColorLabel(0)
+     .setValue(600)
+     ;  
+     
+     cp5.addSlider("guiAdjustBrightness")
+     .setPosition(10,80)
+     .setRange(0,50)
+     .setLabel("Brightness Interval")
+     .setColorLabel(0)
+     .setValue(8)
+     ;  
+     
+     cp5.addSlider("guiYOffset")
+     .setPosition(10,100)
+     .setRange(0,1000)
+     .setLabel("Y Offset")
+     .setColorLabel(0)
+     .setValue(0)
+     ;  
+          
+}
+
+//TODO: Use callbacks instead of using these default functions
+void guiYOffset() {
+  paper_top_to_origin = (int)cp5.getController("guiYOffset").getValue();
+  reset();
+  
+}
+
+void guiHalfRadius() {
+  half_radius = (int)cp5.getController("guiHalfRadius").getValue();
+  reset();
+  
+}
+
+void guiAdjustBrightness() {
+  adjustbrightness = (int)cp5.getController("guiAdjustBrightness").getValue();
+  reset();
+}
+
+void guiSquiggleLength() {
+  squiggle_length = (int)cp5.getController("guiSquiggleLength").getValue();
+  reset();
+}
+
+void guiSquiggleTotal() {
+  squiggle_total = (int)cp5.getController("guiSquiggleTotal").getValue();
+   reset();
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void draw() {
     scale(screen_scale);
-    random_darkness_walk();
+    
   
     if (squiggle_count >= squiggle_total) {
-        grid();
-        dump_some_useless_stuff_and_close();
-        noLoop();
+//        grid();
+    } else {
+      random_darkness_walk();
     }
 }
 
@@ -82,22 +173,27 @@ void setup_squiggles() {
   drawing_scale_x = image_size_x / img.width;
   drawing_scale_y = image_size_y / img.height;
   drawing_scale = min(drawing_scale_x, drawing_scale_y);
-
-  println("Picture: " + pic_path);
-  println("Image dimensions: " + img.width + " by " + img.height);
-  println("adjustbrightness: " + adjustbrightness);
-  println("squiggle_total: " + squiggle_total);
-  println("squiggle_length: " + squiggle_length);
-  println("Paper size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
-  println("Max image size: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
-  println("Calc image size " + nf(img.width * drawing_scale,0,2) + " by " + nf(img.height * drawing_scale,0,2) + "      " + nf(img.width * drawing_scale/25.4,0,2) + " by " + nf(img.height * drawing_scale/25.4,0,2));
-  println("Drawing scale: " + drawing_scale);
-
+  
   // Used only for gcode, not screen.
   x_offset = int(-img.width * drawing_scale / 2.0);  
   y_offset = - int(paper_top_to_origin - (paper_size_y - (img.height * drawing_scale)) / 2.0);
-  println("X offset: " + x_offset);  
-  println("Y offset: " + y_offset);  
+  
+  if(VERBOSE == true) {
+    println("Picture: " + pic_path);
+    println("Image dimensions: " + img.width + " by " + img.height);
+    println("adjustbrightness: " + adjustbrightness);
+    println("squiggle_total: " + squiggle_total);
+    println("squiggle_length: " + squiggle_length);
+    println("Paper size: " + nf(paper_size_x,0,2) + " by " + nf(paper_size_y,0,2) + "      " + nf(paper_size_x/25.4,0,2) + " by " + nf(paper_size_y/25.4,0,2));
+    println("Max image size: " + nf(image_size_x,0,2) + " by " + nf(image_size_y,0,2) + "      " + nf(image_size_x/25.4,0,2) + " by " + nf(image_size_y/25.4,0,2));
+    println("Calc image size " + nf(img.width * drawing_scale,0,2) + " by " + nf(img.height * drawing_scale,0,2) + "      " + nf(img.width * drawing_scale/25.4,0,2) + " by " + nf(img.height * drawing_scale/25.4,0,2));
+    println("Drawing scale: " + drawing_scale);
+    println("X offset: " + x_offset);  
+    println("Y offset: " + y_offset); 
+  }
+
+  
+   
 
   // Used only for screen, not gcode.
   center_x = int(width  / 2 * (1 / screen_scale));
@@ -121,12 +217,20 @@ void grid() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void dump_some_useless_stuff_and_close() {
-  println ("Extreams of X: " + drawing_min_x + " thru " + drawing_max_x);
-  println ("Extreams of Y: " + drawing_min_y + " thru " + drawing_max_y);
+void reset() {
+  darkest_x = 100;
+  darkest_y = 100;
+  squiggle_count = 0; 
+  background(0,0,100);
+//  clear();
+  setup_squiggles();
   OUTPUT.flush();
   OUTPUT.close();
+  OUTPUT = createWriter("gcode.txt");
 }
+<<<<<<< HEAD
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+=======
+>>>>>>> 7ae7804499c02f8151c22af39aaf9ab972ae5654

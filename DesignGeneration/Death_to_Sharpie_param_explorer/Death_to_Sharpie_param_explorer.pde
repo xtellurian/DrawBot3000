@@ -87,7 +87,7 @@ void draw() {
       if (squiggle_count >= squiggle_total) {
 //          grid();
 //          dump_some_useless_stuff_and_close();
-          String filename = "frames/" + pic_name + "-" + squiggle_total + "tot_" + squiggle_length + "len_" + half_radius + "rad_" + adjustbrightness + "bri.png";
+          String filename = "frames/out-" + pic_name + "-" + squiggle_total + "tot_" + squiggle_length + "len_" + half_radius + "rad_" + adjustbrightness + "bri.png";
           println("saving " + filename);
           saveFrame(filename);
           break;
@@ -165,4 +165,6 @@ void reset() {
   squiggle_count = 0;
   background(0,0,100);
   clear();
+  img = loadImage(sketchPath("") + pic_path);  // Load the image into the program
+  img.loadPixels();
 }
